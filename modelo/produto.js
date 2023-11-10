@@ -1,3 +1,5 @@
+import ProdutoDAO from "../persistencia/produtoDAO";
+
 export default class Produto {
     #codigo;
     #descricao;
@@ -86,18 +88,22 @@ export default class Produto {
     }
 
     async gravar() {
-
+        const prodDAO = new ProdutoDAO();
+        await prodDAO.excluir(this);
     }
 
     async excluir() {
-
+        const prodDAO = new ProdutoDAO();
+        await prodDAO.excluir(this);
     }
 
     async alterar() {
-
+        const prodDAO = new ProdutoDAO();
+        await prodDAO.alterar(this);
     }
 
-    async consultar() {
-
+    async consultar(termo) {
+        const prodDAO = new ProdutoDAO();
+        return await prodDAO.excluir(termo);
     }
 }

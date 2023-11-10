@@ -14,7 +14,7 @@ export default class CategoriaDAO {
         }
     }
 
-    async excluir() {
+    async excluir(categoria) {
         if (categoria instanceof Categoria) {
             const sql = "DELETE FROM categoria WHERE cat_codigo = ?";
             const parametros = [categoria.descricao, categoria.codigo];
@@ -24,7 +24,7 @@ export default class CategoriaDAO {
         }
     }
 
-    async alterar() {
+    async alterar(categoria) {
         if (categoria instanceof Categoria) {
             const sql = "UPDATE categoria SET cat_descricao = ? WHERE cat_codigo = ?";
             const parametros = [categoria.descricao, categoria.codigo];
@@ -53,7 +53,7 @@ export default class CategoriaDAO {
         const conexao = await conectar();
         const [registros, campos] = await conexao.execute(sql, parametros);
         let listaCategorias = [];
-        for(registro of registros) {
+        for(const registro of registros) {
             const categoria = new Categoria(registro.cat_codigo, registro.cat_descricao);
             listaCategorias.push(categoria);
         }
