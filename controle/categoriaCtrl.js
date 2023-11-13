@@ -107,5 +107,13 @@ export default class CategoriaCtrl {
 
     consultar(requisicao, resposta){
         resposta.type('application/json');
+        try {
+
+        } catch (erro) {
+            resposta.status(500).json({
+                "status": false,
+                "mensagem": "Erro ao consultar categgoria: " + erro.message
+            });
+        }
     }
 }

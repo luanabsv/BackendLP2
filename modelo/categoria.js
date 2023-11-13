@@ -32,8 +32,6 @@ export default class Categoria {
         }
     }
 
-
-    //camada de modelo acessa a camada de persistencia
     async gravar() {
         const catDAO = new CategoriaDAO();
         await catDAO.gravar(this);
