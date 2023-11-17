@@ -4,7 +4,7 @@ import Fornecedor from "../modelo/fornecedor.js";
 export default class FornecedorDAO {
     async gravar(fornecedor) {
         if (fornecedor instanceof Fornecedor) {
-            const sql = "INSERT INTO fornecedor(cnpj, nome, endereco, telefone, email) VALUES (?, ?, ?, ?, ?)";
+            const sql = "INSERT INTO fornecedor(forn_cnpj, forn_nome, forn_endereco, forn_telefone, forn_email) VALUES (?, ?, ?, ?, ?)";
             const parametros = [
                 fornecedor.cnpj,
                 fornecedor.nome,
@@ -21,7 +21,7 @@ export default class FornecedorDAO {
 
     async excluir(fornecedor) {
         if (fornecedor instanceof Fornecedor) {
-            const sql = "DELETE FROM fornecedor WHERE cnpj = ?";
+            const sql = "DELETE FROM fornecedor WHERE forn_cnpj = ?";
             const parametros = [fornecedor.cnpj];
             const conexao = await conectar();
             await conexao.execute(sql, parametros);
@@ -31,7 +31,7 @@ export default class FornecedorDAO {
 
     async alterar(fornecedor) {
         if (fornecedor instanceof Fornecedor) {
-            const sql = "UPDATE fornecedor SET nome = ?, endereco = ?, telefone = ?, email = ? WHERE cnpj = ?";
+            const sql = "UPDATE fornecedor SET forn_nome = ?, forn_endereco = ?, forn_telefone = ?, forn_email = ? WHERE forn_cnpj = ?";
             const parametros = [
                 fornecedor.nome,
                 fornecedor.endereco,
@@ -50,13 +50,14 @@ export default class FornecedorDAO {
         let parametros = [];
 
         if (!isNaN(parseInt(parametroConsulta))) {
-            sql = 'SELECT * FROM fornecedor WHERE cnpj = ?';
+            sql = 'SELECT * FROM fornecedor WHERE forn_cnpj = ?';
             parametros = [parametroConsulta];
         } else {
             if (!parametroConsulta) {
                 parametroConsulta = '';
+                sql="SELECT * FROM fornecedor"
             } else {
-                sql = 'SELECT * FROM fornecedor WHERE nome LIKE ?';
+                sql = 'SELECT * FROM fornecedor WHERE forn_nome LIKE ?';
                 parametros = ['%' + parametroConsulta + '%'];
             }
         }
@@ -66,11 +67,11 @@ export default class FornecedorDAO {
         let listaFornecedores = [];
         for (const registro of registros) {
             const fornecedor = new Fornecedor(
-                registro.cnpj,
-                registro.nome,
-                registro.endereco,
-                registro.telefone,
-                registro.email
+                registro.forn_cnpj,
+                registro.forn_nome,
+                registro.forn_endereco,
+                registro.forn_telefone,
+                registro.forn_email
             );
             listaFornecedores.push(fornecedor);
         }
