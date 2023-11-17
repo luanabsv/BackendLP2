@@ -1,10 +1,10 @@
 import { Router } from "express";
-import ClienteCtrl from "../controle/clienteCtrl";
+import ClienteCtrl from "../controle/clienteCtrl.js"
 
-const cliCtrl = new ClienteCtrl();
+const cliCtrl = new ClienteCtrl()
 const rotaCliente = new Router();
 
-rotaProduto
+rotaCliente
 .get('/', cliCtrl.consultar)
 .get('/:termo', cliCtrl.consultar)
 .post('/', cliCtrl.gravar)

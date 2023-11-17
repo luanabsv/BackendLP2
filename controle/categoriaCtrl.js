@@ -1,4 +1,4 @@
-import Categoria from "../modelo/categoria";
+import Categoria from "../modelo/categoria.js";
 
 export default class CategoriaCtrl {
 

@@ -1,3 +1,5 @@
+import ClienteDAO from "../persistencia/clienteDAO.js"
+
 export default class Cliente {
     #cpf
     #nome

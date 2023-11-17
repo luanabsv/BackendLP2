@@ -4,7 +4,7 @@ import FornecedorCtrl from "../controle/fornecedorCtrl.js";
 const fornCtrl = new FornecedorCtrl();
 const rotaFornecedor = new Router();
 
-rotaProduto
+rotaFornecedor
 .get('/', fornCtrl.consultar)
 .get('/:termo', fornCtrl.consultar)
 .post('/', fornCtrl.gravar)

@@ -9,7 +9,7 @@ export default async function conectar() {
         const pool = mysql.createPool({
             host: 'localhost',
             user: 'root',
-            database: 'test',
+            database: 'sistema',
             waitForConnections: true,
             connectionLimit: 10,
             maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
@@ -19,7 +19,7 @@ export default async function conectar() {
             keepAliveInitialDelay: 0
         });
 
-        global.poolConexoes = poll;
+        global.poolConexoes = pool;
         return await pool.getConnection();
     }
 }

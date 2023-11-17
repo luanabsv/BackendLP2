@@ -1,17 +1,20 @@
-import Produto from './modelo/produto.js';
-import Categoria from './modelo/categoria.js'
-import CategoriaDAO from './persistencia/categoriaDAO.js';
+import express from 'express';
+import rotaCategoria from './rotas/rotasCategoria.js';
+import rotaProduto from './rotas/rotasProduto.js';
+import rotaFornecedor from './rotas/rotasFornecedor.js';
+import rotaCliente from './rotas/rotasCliente.js';
 
-// const categoria = new Categoria(1, 'Calçados Infantis');
-// categoria.gravar().then(() => {
-//     console.log(categoria.id)
-// })
+const host = "localhost";
+const porta = 4000;
+//aplicação HTTP pronta, bastando parametrizá-la
+const app = express();
+//preparar a app para entender o formato JSON
+app.use(express.json());
+app.use('/categoria',rotaCategoria);
+app.use('/produto',rotaProduto);
+app.use('/cliente',rotaCliente);
+app.use('/fornecedor',rotaFornecedor);
 
-
-const categoria = new CategoriaDAO();
-categoria.consultar('calçado').then((listaCategorias) => {
-    console.log(listaCategorias);
-})
-const produto = new Produto(1, 'Tênis Allstar', 55.36, 159.99, 'indeterminada', 10, categoria);
-
-console.log(produto.toJSON());
+app.listen(porta,host, ()=>{
+    console.log(`API do sistema em execução: ${host}:${porta}`);
+});
