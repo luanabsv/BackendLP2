@@ -138,14 +138,37 @@ export default class ProdutoCtrl {
         }
     }
 
-    async consultar(requisicao, resposta) {
+    consultar(requisicao, resposta) {
         resposta.type('application/json');
-        try {
-
-        } catch (erro) {
-            resposta.status(500).json({
+        //express, por meio do controle de rotas, será
+        //preparado para esperar um termo de busca
+        let termo = requisicao.params.termo;
+        if (!termo){
+            termo = "";
+        }
+        if (requisicao.method === "GET"){
+            const produto = new Produto();
+            produto.consultar(termo).then((listaProdutos)=>{
+                resposta.json(
+                    {
+                        status:true,
+                        listaProdutos
+                    });
+            })
+            .catch((erro)=>{
+                resposta.json(
+                    {
+                        status:false,
+                        mensagem:"Não foi possível obter aos produtos: " + erro.message
+                    }
+                );
+            });
+        }
+        else 
+        {
+            resposta.status(400).json({
                 "status": false,
-                "mensagem": "Erro ao consultar produto: " + erro.message
+                "mensagem": "Por favor, utilize o método GET para consultar produtos!"
             });
         }
     }

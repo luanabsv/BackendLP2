@@ -105,14 +105,35 @@ export default class CategoriaCtrl {
         }
     }
 
-    consultar(requisicao, resposta){
+    consultar(requisicao, resposta) {
         resposta.type('application/json');
-        try {
-
-        } catch (erro) {
-            resposta.status(500).json({
+        let termo = requisicao.params.termo;
+        if (!termo){
+            termo = "";
+        }
+        if (requisicao.method === "GET"){
+            const categoria = new Categoria();
+            categoria.consultar(termo).then((listaCategorias)=>{
+                resposta.json(
+                    {
+                        status:true,
+                        listaCategorias
+                    });
+            })
+            .catch((erro)=>{
+                resposta.json(
+                    {
+                        status:false,
+                        mensagem:"Não foi possível obter as categorias: " + erro.message
+                    }
+                );
+            });
+        }
+        else 
+        {
+            resposta.status(400).json({
                 "status": false,
-                "mensagem": "Erro ao consultar categgoria: " + erro.message
+                "mensagem": "Por favor, utilize o método GET para consultar categorias!"
             });
         }
     }

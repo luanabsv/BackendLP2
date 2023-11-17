@@ -130,14 +130,37 @@ export default class FornecedorCtrl {
         }
     }
 
-    async consultar(requisicao, resposta) {
+    consultar(requisicao, resposta) {
         resposta.type('application/json');
-        try {
-  
-        } catch (erro) {
-            resposta.status(500).json({
+        //express, por meio do controle de rotas, será
+        //preparado para esperar um termo de busca
+        let termo = requisicao.params.termo;
+        if (!termo){
+            termo = "";
+        }
+        if (requisicao.method === "GET"){
+            const fornecedor = new Fornecedor();
+            fornecedor.consultar(termo).then((listaFornecedores)=>{
+                resposta.json(
+                    {
+                        status:true,
+                        listaFornecedores
+                    });
+            })
+            .catch((erro)=>{
+                resposta.json(
+                    {
+                        status:false,
+                        mensagem:"Não foi possível obter os fornecedores: " + erro.message
+                    }
+                );
+            });
+        }
+        else 
+        {
+            resposta.status(400).json({
                 "status": false,
-                "mensagem": "Erro ao consultar fornecedores: " + erro.message
+                "mensagem": "Por favor, utilize o método GET para consultar fornecedores!"
             });
         }
     }
